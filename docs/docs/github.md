@@ -4,19 +4,20 @@ title: Github代码管理
 
 # Github代码管理
 
-
-
-
 ## Squash and Rebase
 
 You don't need React to write simple standalone pages.
 我们日常的软件开发通常会在一个单独分支（my-branch）上进行，每个分支（master除外）都有一个基分支（base branch）， 因为是团队多人开发，当 base branch 有其她人的新提交的时候，就需要给我们的 my-branch 进行 rebase （必要时，还有 squash）
 
-
 ### 检查my-branch是否有未提交的代码
+
+```
 git checkout my-branch
 git status
+```
+
 如果 git status 显示有未提交的代码，有两种方式处理：
+
 #### 方法一：提交代码
 
 ```
@@ -25,9 +26,11 @@ git commit -m "commit-message"
 ```
 
 #### 方法二：stash
+
 ```
 git stash
 ```
+
 :::tip My tip
 
 用 git status 确保没有未提交的代码，git stash 对新增或者删除了的文件是不起作用的，这个时候我们只能用方法一
@@ -35,11 +38,14 @@ git stash
 :::
 
 ### 更新本地base-branch
+
 ```
 git checkout base-branch
 git pull origin base-branch
 ```
+
 ### Squash and Commits(非必须)
+
 :::tip My tip
 
 如果分支上有多次提交，建议先 squash:
@@ -52,11 +58,13 @@ git rebase -i HEAD~n
 ```
 
 n 等于 my-branch 上的 commit 次数，举个例子，如果有 3 次提交：
+
 ```
 git rebase -i HEAD~3
 ```
 
 回车，会弹出编辑器界面，如下：
+
 ```
 pick 343r3r First commit message
 pick j6f3f3 Second commit message
@@ -64,11 +72,13 @@ pick ze32t5 Third commit message
 ```
 
 将后面 (n -1) 个 pick 改成 f:
+
 ```
 pick 343r3r First commit message
 f j6f3f3 Second commit message
 f ze32t5 Third commit message
 ```
+
 编辑器保存退出(ctrl+o=>enter=>ctrl+x)，如果看到
 
 :::tip My tip
@@ -79,7 +89,9 @@ f ze32t5 Third commit message
 ```
 Successfully rebased ...
 ```
+
 代表 squash 成功,最后 push squash 后的 commit：
+
 ```
 git push origin my-branch -f
 ```
@@ -87,6 +99,7 @@ git push origin my-branch -f
 ### Rebase
 
 如果 my-branch 只有一次提交，或者已经完成 squash，就可以开始 rebase
+
 ```
 git checkout my-branch
 git rebase base-branch
